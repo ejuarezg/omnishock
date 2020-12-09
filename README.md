@@ -33,6 +33,69 @@ You'll likely need either permissive `udev` rules for your USB gamepads, or to m
 
 For more information specific to setting up gamepads on Linux, I recommend checking out [this article on the Arch Wiki](https://wiki.archlinux.org/index.php/Gamepad).
 
+## Building for the Raspberry Pi 1 B+
+
+Due to the older ARM SoC used on the B+, cross compiling to this platform was a bit of a nightmare to get working. However, I managed to figure it out. **Follow these special instructions only if you are cross-compiling omnishock to the B+. Otherwise, skip this section.**
+
+**NOTE:** if you want to compile for ARMv7, take a look at the scripts in the `ci` folder of this project. It is much more straightforward than what we are about to do next.
+
+### Creating an image of the toolchain
+
+Cross compilation to the B+ is performed locally using the `cross` crate. We will install this crate in the following subsection. For now, begin by cloning my fork of the `cross` crate source code and changing into the `docker` subdirectory.
+
+**NOTE:** Many of the following build commands use podman. If you are using Docker instead, simply change the command `podman` to `docker` anywhere an image is built.
+
+Build the toolchain image using
+```sh
+podman build -t raspi1-bplus-gnueabihf-toolchain -f Dockerfile.raspi1-bplus-gnueabihf
+```
+
+### Building omnishock
+
+Clone this repo and update to the latest revision of the SDL
+game controller database with
+```sh
+git clone --recurse-submodules https://github.com/ejuarezg/omnishock.git omnishock && cd omnishock
+git submodule foreach git checkout master 
+git submodule foreach git pull origin master 
+```
+
+**NOTE:** If you want to know more about the above code used for git submodules, check out this [link](https://stackoverflow.com/questions/18770545/why-is-my-git-submodule-head-detached-from-master).
+
+As of the writing of this guide (2020/12/09), a [pull request with the Xbox Series S/X controller mappings](https://github.com/gabomdq/SDL_GameControllerDB/pull/401) has not been merged. Until it is, we will patch the database to add these new bindings.
+```sh
+cd vendor/SDL_GameControllerDB
+curl -LO https://gist.githubusercontent.com/ejuarezg/1dc5f117947b5752fccac668a7c037c3/raw/0dd17c0a77614f104cb737b5c9e8b1ec9cfc0a52/xsx_controller.patch
+patch < xsx_controller.patch
+```
+**If you don't care for support of this controller, you don't have to perform the patch.** Furthermore, you will need to install a recent version of SDL2 on your pi in order to support this new controller. For now, identifying what version of SDL2 supports the new Xbox Series S/X controller and compiling it is out of the scope of this README.
+
+You can now install the `cross` crate using cargo or through your package manager of choice.
+
+Now, instead of getting the libraries from our own Raspberry Pi, as mentioned in [this post](https://stackoverflow.com/questions/19162072/how-to-install-the-raspberry-pi-cross-compiler-on-my-linux-host-machine/58559140#58559140), we will be downloading the raspi (short for Raspberry Pi) libraries required to compile omnishock from the official repos.
+
+You may be wondering how we do this. Well, I'm glad you asked. When we installed the toolchain, we added the official repos to the list of package sources. All we need to do is create another image based off of the toolchain image and install the correct raspi libraries.
+
+This is all taken care of in the `Dockerfile` provided in the root folder of this project. If you are curious to know how this is done, go ahead and inspect the Dockerfile. In essence, we are not really installing the raspi libraries to the system in the image. Rather, we are downloading the libraries and then telling the Rust linker and compiler where to look for them in the file `.cargo/config.toml`.
+
+Create the omnishock builder image by changing into the root folder of this project and running the command
+```sh
+podman build -t raspi1-bplus-gnu-omnishock -f Dockerfile
+```
+
+Finally, run one of the following commands to build omnishock
+```sh
+# Simple build command
+cross build --target arm-unknown-linux-gnueabihf--release
+
+# Advanced build command. This will clean up the target directory before
+# building and print out useful info during compilation.
+cargo clean && cross build --target arm-unknown-linux-gnueabihf --verbose --release
+```
+inside the root folder of this project.
+
+You will find the compiled binary inside `target/arm-unknown-linux-gnueabihf/release/`.
+
 ## Building
 
 - `git clone --recurse-submodules https://github.com/ticky/omnishock.git omnishock && cd omnishock`
