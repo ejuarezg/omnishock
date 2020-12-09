@@ -1,2 +1,2 @@
 [target.arm-unknown-linux-gnueabihf]
-image = "localhost/raspi1-bplus-gnueabihf-toolchain:latest"
+image = "localhost/raspi1-bplus-gnu-omnishock:latest"
