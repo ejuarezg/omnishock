@@ -5,7 +5,6 @@ FROM localhost/raspi1-bplus-gnueabihf-toolchain
 
 RUN dpkg --add-architecture armhf \
     && apt-get update \
-    && apt-get install --assume-yes fakeroot \
     && mkdir /raspberrypi \
     && cd /raspberrypi \
     # The first four packages are required to populate the folder /opt/vc. See
@@ -16,11 +15,13 @@ RUN dpkg --add-architecture armhf \
     && apt-get download $(apt-cache depends --recurse --no-recommends \
         --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances \
         --no-pre-depends ${PACKAGES} | grep "^\w") \
-    # The next six lines were adapted from
+    # The next eight lines were adapted from
     # https://superuser.com/questions/1271145/how-do-you-create-a-fake-install-of-a-debian-package-for-use-in-testing/1274900#1274900
     # The `|| :` at the end is to prevent Docker or podman from panicking and
     # exiting.
-    && mkdir -p rootfs/{install,dpkg/info,dpkg/updates} \
+    && mkdir -p rootfs/install \
+    && mkdir -p rootfs/dpkg/info \
+    && mkdir -p rootfs/dpkg/updates \
     && touch rootfs/dpkg/status \
     && PATH=/sbin:/usr/sbin:$PATH fakeroot dpkg --force-architecture \
         --force-depends --force-script-chrootless --log=`pwd`/rootfs/dpkg.log \
