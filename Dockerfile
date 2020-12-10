@@ -1,7 +1,7 @@
 # Build image:
 # podman build -t raspi1-bplus-gnu-omnishock -f Dockerfile
 
-FROM localhost/raspi1-bplus-gnueabihf-toolchain-2
+FROM localhost/raspi1-bplus-gnueabihf-toolchain
 
 RUN dpkg --add-architecture armhf \
     && apt-get update \
