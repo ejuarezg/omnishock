@@ -84,7 +84,8 @@ Create the omnishock builder image by changing into the root folder of this proj
 podman build -t raspi1-bplus-gnu-omnishock -f Dockerfile
 ```
 
-Finally, run one of the following commands inside the root folder of this project to build omnishock
+Finally, run one of the following commands inside the root folder of this
+project to build omnishock
 ```sh
 # Simple build command
 cross build --target arm-unknown-linux-gnueabihf--release
@@ -93,7 +94,6 @@ cross build --target arm-unknown-linux-gnueabihf--release
 # building and print out useful info during compilation.
 cargo clean && cross build --target arm-unknown-linux-gnueabihf --verbose --release
 ```
-inside the root folder of this project.
 
 You will find the compiled binary inside `target/arm-unknown-linux-gnueabihf/release/`.
 
