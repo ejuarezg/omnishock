@@ -65,6 +65,7 @@ git submodule foreach git pull origin master
 As of the writing of this guide (2020/12/09), a [pull request with the Xbox Series S/X controller mappings](https://github.com/gabomdq/SDL_GameControllerDB/pull/401) has not been merged. Until it is, we will patch the database to add these new bindings.
 ```sh
 cd vendor/SDL_GameControllerDB
+git checkout f12a0da5
 curl -LO https://gist.githubusercontent.com/ejuarezg/1dc5f117947b5752fccac668a7c037c3/raw/0dd17c0a77614f104cb737b5c9e8b1ec9cfc0a52/xsx_controller.patch
 patch < xsx_controller.patch
 ```
@@ -83,7 +84,7 @@ Create the omnishock builder image by changing into the root folder of this proj
 podman build -t raspi1-bplus-gnu-omnishock -f Dockerfile
 ```
 
-Finally, run one of the following commands to build omnishock
+Finally, run one of the following commands inside the root folder of this project to build omnishock
 ```sh
 # Simple build command
 cross build --target arm-unknown-linux-gnueabihf--release
