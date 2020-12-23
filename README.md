@@ -62,14 +62,7 @@ git submodule foreach git pull origin master
 
 **NOTE:** If you want to know more about the above code used for git submodules, check out this [link](https://stackoverflow.com/questions/18770545/why-is-my-git-submodule-head-detached-from-master).
 
-As of the writing of this guide (2020/12/09), a [pull request with the Xbox Series S/X controller mappings](https://github.com/gabomdq/SDL_GameControllerDB/pull/401) has not been merged. Until it is, we will patch the database to add these new bindings.
-```sh
-cd vendor/SDL_GameControllerDB
-git checkout f12a0da5
-curl -LO https://gist.githubusercontent.com/ejuarezg/1dc5f117947b5752fccac668a7c037c3/raw/0dd17c0a77614f104cb737b5c9e8b1ec9cfc0a52/xsx_controller.patch
-patch < xsx_controller.patch
-```
-**If you don't care for support of this controller, you don't have to perform the patch.** Furthermore, you will need to install a recent version of SDL2 on your pi in order to support this new controller. For now, identifying what version of SDL2 supports the new Xbox Series S/X controller and compiling it is out of the scope of this README.
+**NOTE:** You will need to install a recent version of SDL2 on your pi in order to support newer controllers. For now, compiling SDL2 is out of the scope of this README.
 
 You can now install the `cross` crate using cargo or through your package manager of choice.
 
