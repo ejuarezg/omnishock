@@ -59,12 +59,12 @@ const TWENTY_BYTE_OK_HEADER: u8 = DUALSHOCK_MAGIC;
 // Serial port name hint is different per-OS
 #[cfg(target_os = "macos")]
 const SERIAL_HINT: &str =
-    "Device to use to communcate.\n(Usually /dev/cu.usbmodem12341 for USB Serial on macOS.)";
+    "Device to use to communicate.\n(Usually /dev/cu.usbmodem12341 for USB Serial on macOS.)";
 #[cfg(all(unix, not(target_os = "macos")))]
 const SERIAL_HINT: &str =
-    "Device to use to communcate.\n(Usually /dev/ttyUSB0 for USB Serial on Unix.)";
+    "Device to use to communicate.\n(Usually /dev/ttyUSB0 for USB Serial on Unix.)";
 #[cfg(windows)]
-const SERIAL_HINT: &str = "Device to use to communcate.\n(Usually COM3 for USB Serial on Windows.)";
+const SERIAL_HINT: &str = "Device to use to communicate.\n(Usually COM3 for USB Serial on Windows.)";
 
 // How many times you need to multiply a u8 converted
 // to u16 by to become a u16 of the same magnitude
