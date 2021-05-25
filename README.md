@@ -4,12 +4,6 @@
 
 Something to do with game controllers!
 
-## To do
-
-- Update this crate to the latest version of Rust SDL2 bindings
-    - Fewer dependencies
-- Pull new commits from `cross` upstream
-
 ## Supported Hardware
 
 Omnishock currently supports communicating with a [Teensy 2.0](https://www.pjrc.com/store/teensy.html), running either:
@@ -87,7 +81,7 @@ Finally, run one of the following commands inside the root folder of this
 project to build omnishock
 ```sh
 # Simple build command
-cross build --target arm-unknown-linux-gnueabihf--release
+cross build --target arm-unknown-linux-gnueabihf --release
 
 # Advanced build command. This will clean up the target directory before
 # building and print out useful info during compilation.
