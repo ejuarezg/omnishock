@@ -4,6 +4,12 @@
 
 Something to do with game controllers!
 
+## To do
+
+- Update this crate to the latest version of Rust SDL2 bindings
+    - Fewer dependencies
+- Pull new commits from `cross` upstream
+
 ## Supported Hardware
 
 Omnishock currently supports communicating with a [Teensy 2.0](https://www.pjrc.com/store/teensy.html), running either:
@@ -62,7 +68,7 @@ git submodule foreach git pull origin master
 
 **NOTE:** If you want to know more about the above code used for git submodules, check out this [link](https://stackoverflow.com/questions/18770545/why-is-my-git-submodule-head-detached-from-master).
 
-**NOTE:** You will need to install a recent version of SDL2 on your pi in order to support newer controllers. If your distribution does not have up-to-date packages, try out my SDL2 compilation guide over on [my "guides" repo.](https://github.com/ejuarezg/guides/blob/master/ps2_homebrew/raspi_controller_setup.md#install-sdl2).
+**NOTE:** You will need to install a recent version of SDL2 on your pi in order to support newer controllers. If your distribution does not have up-to-date packages, try out my SDL2 compilation guide over on [my "guides" repo.](https://github.com/ejuarezg/guides/blob/master/ps2_homebrew/raspi_controller_setup.md#install-sdl2)
 
 You can now install the `cross` crate using cargo or through your package manager of choice.
 
