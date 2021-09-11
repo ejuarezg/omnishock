@@ -64,7 +64,7 @@ git submodule foreach git pull origin master
 
 **NOTE:** You will need to install a recent version of SDL2 on your pi in order to support newer controllers. If your distribution does not have up-to-date packages, try out my SDL2 compilation guide over on [my "guides" repo.](https://github.com/ejuarezg/guides/blob/master/ps2_homebrew/raspi_controller_setup.md#install-sdl2)
 
-You can now install the `cross` crate using cargo or through your package manager of choice.
+**IMPORTANT:** You can now install the `cross` crate using cargo (`cargo install cross`) or through your package manager of choice (Arch Linux-based systems have the official `cross` package available).
 
 Now, instead of getting the libraries from our own Raspberry Pi, as mentioned in [this post](https://stackoverflow.com/questions/19162072/how-to-install-the-raspberry-pi-cross-compiler-on-my-linux-host-machine/58559140#58559140), we will be downloading the raspi (short for Raspberry Pi) libraries required to compile omnishock from the official repos.
 
