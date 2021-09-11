@@ -78,7 +78,7 @@ impl GameController for ControllerManager {
 
 pub struct SDLManager {
     pub context: sdl2::Sdl,
-    pub video_subsystem: Option<sdl2::VideoSubsystem>,
+    // pub video_subsystem: Option<sdl2::VideoSubsystem>,
     pub game_controller_subsystem: sdl2::GameControllerSubsystem,
     pub active_controllers: HashMap<u32, ControllerManager>,
 }
@@ -97,17 +97,17 @@ impl SDLManager {
          *       effect that it prevents the system from triggering the screen
          *       saver. It will, however, be used to provide a window for focus
          *       in future. */
-        let video_subsystem = {
-            #[cfg(feature = "flamegraph-profiling")]
-            let _guard = flame::start_guard("initialise video subsystem");
-            match context.video() {
-                Ok(video) => Some(video),
-                Err(error) => {
-                    println!("couldn't initialise video: {}", error);
-                    None
-                }
-            }
-        };
+        // let video_subsystem = {
+        //     #[cfg(feature = "flamegraph-profiling")]
+        //     let _guard = flame::start_guard("initialise video subsystem");
+        //     match context.video() {
+        //         Ok(video) => Some(video),
+        //         Err(error) => {
+        //             println!("couldn't initialise video: {}", error);
+        //             None
+        //         }
+        //     }
+        // };
         let game_controller_subsystem = {
             #[cfg(feature = "flamegraph-profiling")]
             let _guard = flame::start_guard("initialise controller subsystem");
@@ -119,7 +119,7 @@ impl SDLManager {
 
         let mut sdl_manager = SDLManager {
             context,
-            video_subsystem,
+            // video_subsystem,
             game_controller_subsystem,
             active_controllers,
         };
